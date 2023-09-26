@@ -1,4 +1,4 @@
-##aplikacja mobil
+aplikacja mobil
 - zrobie pokedex
 - mozliwosc przegladania pokemonow
 - bedzie uzywac api pokeapi
