@@ -3,21 +3,12 @@ import { Text, View, StyleSheet, TouchableWithoutFeedback, Image, TouchableHighl
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
-import axios from 'axios';
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationProps } from './types';
 
 SplashScreen.preventAutoHideAsync();
 
-
-interface Type {
-  name: string,
-  url: string,
-  sprites: {
-    front_default: string,
-  }
-}
 
 const pokemonList = [
   {
@@ -259,7 +250,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
 
   return (
-    // scroll pls
     <ScrollView>
     <View onLayout={onLayoutRootView}>
       <TouchableWithoutFeedback>
@@ -276,7 +266,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         return (
         <TouchableHighlight key={index} onPress={() => navigation.navigate("Pokemon", { name: pokemon.name })}>
         <View key={pokemon.url} style={styles.box}>
-          <Text>{capitalizeFirstLetter(pokemon.name)}</Text>
+          <Text style={styles.name1}>{capitalizeFirstLetter(pokemon.name)}</Text>
           <Image style={{
             height: 50,
             width: 50,
@@ -299,6 +289,10 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 15,
   },
+  name1: {
+    fontFamily: 'Inter-Black',
+    fontSize: 25,
+  },
   header: {
     fontFamily: 'Inter-Black',
     backgroundColor: '#bd4c37',
@@ -307,6 +301,7 @@ const styles = StyleSheet.create({
 
   },
   box: {
+    fontFamily: 'Inter-Black',
     backgroundColor: '#f5f5f5',
     padding: 10,
     margin: 10,

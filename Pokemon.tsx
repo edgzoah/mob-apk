@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -23,6 +24,7 @@ const Pokemon: React.FC<Props> = ({ navigation, route }) => {
   const name = route.params.name;
   const [pokemonData, setPokemonData] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [img, setImg] = useState<any>([]);
 
   // async function getPokemon() {
   //   const api = axios.create({ baseURL: "https://pokeapi.co/api/v2" });
@@ -45,6 +47,7 @@ const Pokemon: React.FC<Props> = ({ navigation, route }) => {
         console.log(response.data.sprites.front_default);
         setPokemonData(response.data);
         setLoading(false);
+        setImg([response.data.sprites.front_default, response.data.sprites.back_default]);
       }
     };
 
@@ -94,17 +97,18 @@ const Pokemon: React.FC<Props> = ({ navigation, route }) => {
               <View>
                 <Text style={styles.id}>#{pokemonData.id}</Text>
                 <Text style={styles.h1}>{capitalizeFirstLetter(name)}</Text>
+                <TouchableOpacity onPress={() => setImg([...img].reverse())}>
                 <Image
                 style={styles.image}
-                  source={{ uri: pokemonData.sprites.front_default }}
-                />
+                  source={{ uri: img[0] }}
+                /></TouchableOpacity>
                 <View style={styles.box}>
-              <Text>Height: {pokemonData.height}</Text>
-              <Text>Weight: {pokemonData.weight}</Text>
-              <Text>Base experience: {pokemonData.base_experience}</Text>
-              <Text>Abilities: {pokemonData.abilities[0].ability.name}</Text>
+              <Text style={styles.name1}>Height: {pokemonData.height}</Text>
+              <Text style={styles.name1}>Weight: {pokemonData.weight}</Text>
+              <Text style={styles.name1}>Base experience: {pokemonData.base_experience}</Text>
+              <Text style={styles.name1}>Abilities: {pokemonData.abilities[0].ability.name}</Text>
               {pokemonData.types.map((type: any) => (
-                <Text key={type.type.name}>Type: {type.type.name}</Text>
+                <Text key={type.type.name} style={styles.name1}>Type: {type.type.name}</Text>
               ))}
               </View>
 
@@ -123,6 +127,11 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: "white",
     padding: 15,
+  },
+  name1: {
+    color: "black",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   box: {
     fontFamily: "Inter-Black",
